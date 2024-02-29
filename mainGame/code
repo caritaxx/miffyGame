@@ -1,12 +1,21 @@
+import processing.sound.*;
+
+int flowerCount = 0;
 Miffy miffy;
-Flower flower;
+ArrayList<Flower> flowers;
+SoundFile collisionSound;
 
 void setup() {
   size(400, 400);
   PImage miffyImg = loadImage("miffy.png");
   PImage flowerImg = loadImage("flower.png");
   miffy = new Miffy(miffyImg, width / 2, height - 60);
-  flower = new Flower(flowerImg, random(width - 50), random(height - 50));
+  flowers = new ArrayList<Flower>();
+  collisionSound = new SoundFile(this, "collision.wav");
+
+  for (int i = 0; i < 5; i++) {
+    addFlower();
+  }
 }
 
 void draw() {
@@ -27,16 +36,33 @@ void draw() {
   }
   miffy.move(dx, dy);
 
- 
-  if (flower.checkCollision(miffy.x, miffy.y)) {
-   
+  for (int i = flowers.size() - 1; i >= 0; i--) {
+    Flower flower = flowers.get(i);
+    flower.display();
+    if (flower.checkCollision(miffy.x, miffy.y)) {
+      collisionSound.play();
+      flowers.remove(i);
+      flowerCount++;
+      addFlower();
+    }
   }
-  flower.display();
 
   miffy.display();
+
+  fill(255);
+  textSize(20);
+  text("Flowers: " + flowerCount, 10, 30);
 }
 
-class Flower {
+void addFlower() {
+  PImage flowerImg = loadImage("flower.png");
+  float x = random(width);
+  float y = random(height);
+  Flower newFlower = new Flower(flowerImg, x, y);
+  flowers.add(newFlower);
+}
+
+class Flower  {
   PImage img;
   float x, y;
   boolean collected;
@@ -69,8 +95,7 @@ class Flower {
     collected = false;
   }
 }
-
-class Miffy {
+class Miffy  {
   PImage img;
   float x, y;
 
