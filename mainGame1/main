@@ -1,0 +1,99 @@
+Miffy miffy;
+Flower flower;
+
+void setup() {
+  size(400, 400);
+  PImage miffyImg = loadImage("miffy.png");
+  PImage flowerImg = loadImage("flower.png");
+  miffy = new Miffy(miffyImg, width / 2, height - 60);
+  flower = new Flower(flowerImg, random(width - 50), random(height - 50));
+}
+
+void draw() {
+  background(0, 102, 0);
+
+  int dx = 0;
+  int dy = 0;
+  if (keyPressed) {
+    if (keyCode == RIGHT) {
+      dx = 1;
+    } else if (keyCode == LEFT) {
+      dx = -1;
+    } else if (keyCode == DOWN) {
+      dy = 1;
+    } else if (keyCode == UP) {
+      dy = -1;
+    }
+  }
+  miffy.move(dx, dy);
+
+ 
+  if (flower.checkCollision(miffy.x, miffy.y)) {
+   
+  }
+  flower.display();
+
+  miffy.display();
+}
+
+class Flower {
+  PImage img;
+  float x, y;
+  boolean collected;
+
+  Flower(PImage img, float x, float y) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+    this.collected = false;
+  }
+
+  void display() {
+    if (!collected) {
+      image(img, x, y, 100, 100);
+    }
+  }
+
+  boolean checkCollision(float miffyX, float miffyY) {
+    if (dist(miffyX, miffyY, x, y) < 20 && !collected) {
+      collected = true;
+      resetFlower();
+      return true;
+    }
+    return false;
+  }
+
+  void resetFlower() {
+    x = random(width - 50);
+    y = random(height - 50);
+    collected = false;
+  }
+}
+
+class Miffy {
+  PImage img;
+  float x, y;
+
+  Miffy(PImage img, float x, float y) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+  }
+
+  void display() {
+    image(img, x, y, 100, 100);
+  }
+
+  void move(int dx, int dy) {
+    
+    float nx = x + dx * 5;
+    float ny = y + dy * 5;
+
+    nx = constrain(nx, 0, width - 50); 
+    ny = constrain(ny, 0, height - 50); 
+
+    x = nx;
+    y = ny;
+  }
+}
+
