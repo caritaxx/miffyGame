@@ -1,0 +1,26 @@
+class Miffy {
+  PImage img;
+  float x, y;
+
+  Miffy(PImage img, float x, float y) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+  }
+
+  void display() {
+    image(img, x, y, 100, 100);
+  }
+
+  void move(int dx, int dy) {
+    
+    float nx = x + dx * 5;
+    float ny = y + dy * 5;
+
+    nx = constrain(nx, 0, width - 50); 
+    ny = constrain(ny, 0, height - 50); 
+
+    x = nx;
+    y = ny;
+  }
+}
