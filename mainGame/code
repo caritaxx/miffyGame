@@ -35,3 +35,64 @@ void draw() {
 
   miffy.display();
 }
+
+class Flower {
+  PImage img;
+  float x, y;
+  boolean collected;
+
+  Flower(PImage img, float x, float y) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+    this.collected = false;
+  }
+
+  void display() {
+    if (!collected) {
+      image(img, x, y, 100, 100);
+    }
+  }
+
+  boolean checkCollision(float miffyX, float miffyY) {
+    if (dist(miffyX, miffyY, x, y) < 20 && !collected) {
+      collected = true;
+      resetFlower();
+      return true;
+    }
+    return false;
+  }
+
+  void resetFlower() {
+    x = random(width - 50);
+    y = random(height - 50);
+    collected = false;
+  }
+}
+
+class Miffy {
+  PImage img;
+  float x, y;
+
+  Miffy(PImage img, float x, float y) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+  }
+
+  void display() {
+    image(img, x, y, 100, 100);
+  }
+
+  void move(int dx, int dy) {
+    
+    float nx = x + dx * 5;
+    float ny = y + dy * 5;
+
+    nx = constrain(nx, 0, width - 50); 
+    ny = constrain(ny, 0, height - 50); 
+
+    x = nx;
+    y = ny;
+  }
+}
