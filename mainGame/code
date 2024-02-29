@@ -1,0 +1,37 @@
+Miffy miffy;
+Flower flower;
+
+void setup() {
+  size(400, 400);
+  PImage miffyImg = loadImage("miffy.png");
+  PImage flowerImg = loadImage("flower.png");
+  miffy = new Miffy(miffyImg, width / 2, height - 60);
+  flower = new Flower(flowerImg, random(width - 50), random(height - 50));
+}
+
+void draw() {
+  background(0, 102, 0);
+
+  int dx = 0;
+  int dy = 0;
+  if (keyPressed) {
+    if (keyCode == RIGHT) {
+      dx = 1;
+    } else if (keyCode == LEFT) {
+      dx = -1;
+    } else if (keyCode == DOWN) {
+      dy = 1;
+    } else if (keyCode == UP) {
+      dy = -1;
+    }
+  }
+  miffy.move(dx, dy);
+
+ 
+  if (flower.checkCollision(miffy.x, miffy.y)) {
+   
+  }
+  flower.display();
+
+  miffy.display();
+}
