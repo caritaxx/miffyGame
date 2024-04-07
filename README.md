@@ -5,5 +5,5 @@ In this game, the user can move miffy around, with an aim to collect as many flo
 
 To play the game, please download it <a href="mainGame">here</a>
 
-[download]({{ site.baseurl }}{% link file.txt %})
+[download]({{ https://github.com/caritaxx/miffyGame/tree/main/mainGame }}{% mainGame.txt %})
 
